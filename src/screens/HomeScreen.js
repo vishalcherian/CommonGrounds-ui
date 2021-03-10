@@ -1,9 +1,17 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
 
-const LoginScreen = ( props ) => {
+const HomeScreen = ( props ) => {
     return (
-        <h1>Home Screen</h1>
+        <Grid container spacing={16}>
+            <Grid item sm={8} xs={12}>
+                <p>Content...</p>
+            </Grid>
+            <Grid item sm={4} xs={12}>
+                <p>Profile...</p>
+            </Grid>
+        </Grid>
     )
 }
 
-export default LoginScreen
+export default HomeScreen

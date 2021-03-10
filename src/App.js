@@ -1,22 +1,35 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import {
   HomeScreen,
   LoginScreen,
+  SignupScreen,
   ProfileScreen
-} from './screens/index'
+} from './screens'
+import './App.css'
+import {
+  NavBar
+} from './components'
+import theme from './theme/colors'
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/" component={HomeScreen} />
-          <Route exact path="/home" component={LoginScreen} />
-          <Route exact path="/home" component={ProfileScreen} />
-        </Switch>
-      </Router>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <NavBar />
+          <div className="container">
+            <Switch >
+              <Route exact path="/" component={HomeScreen} />
+              <Route exact path="/login" component={LoginScreen} />
+              <Route exact path="/signup" component={SignupScreen} />
+              <Route exact path="/profile" component={ProfileScreen} />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
