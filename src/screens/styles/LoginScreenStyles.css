@@ -1,0 +1,21 @@
+.background {
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: 'black';
+    border-style: solid;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    display: block;
+    text-align: center;
+}
+
+form {
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.input-field {
+    display: block
+}

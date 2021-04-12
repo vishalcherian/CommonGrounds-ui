@@ -1,5 +1,7 @@
 import NavBar from './NavBar'
+import PostCard from './PostCard'
 
 export {
-    NavBar
+    NavBar,
+    PostCard
 }
