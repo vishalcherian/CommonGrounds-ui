@@ -16,13 +16,16 @@ const theme = createMuiTheme( {
             fontFamily : [
                 'Barlow',
                 'sans-serif'
-            ].join( ',' )
+            ].join( ',' ),
+            fontSize : '1rem',
+            fontWeight : 'bold'
         },
         body2 : {
             fontFamily : [
                 'Roboto Mono',
                 'sans-serif'
             ].join( ',' ),
+            fontSize : '1rem'
         }
     },
     palette : {

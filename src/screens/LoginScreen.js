@@ -76,7 +76,6 @@ const LoginScreen = ( props ) => {
     }
   }
 
-
   return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />

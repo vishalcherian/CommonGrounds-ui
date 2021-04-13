@@ -5,12 +5,14 @@
 
 const coffeeNotes = {
     'Floral' : {
+        color : 'rgb(200,48,104)',
         'Black Tea' : {},
         'Chamomile' : {},
         'Rose' : {},
         'Jasmine' : {}
     },
     'Fruity' : {
+        color : 'rgb(201,53,47)',
         'Berry' : {
             'Blackberry' : {},
             'Raspberry' : {},
@@ -39,6 +41,7 @@ const coffeeNotes = {
         }
     },
     'Sour' : {
+        color : 'rgb(221, 194, 69)',
         'Sour Aromatics' : {},
         'Acetic Acid' : {},
         'Butyric Acid' : {},
@@ -47,11 +50,13 @@ const coffeeNotes = {
         'Malic Acid' : {}
     },
     'Fermented' : {
+        color : 'rgb(172, 151, 69)',
         'Winey' : {},
         'Whiskey' : {},
         'Overripe' : {}
     },
     'Green/Vegetative' : {
+        color : 'rgb(58,119,56)',
         'Olive Oil' : {},
         'Raw' : {},
         'Under-Ripe' : {},
@@ -64,6 +69,7 @@ const coffeeNotes = {
         'Beany' : {}
     },
     'Other' : {
+        color : 'rgb(72,160,178)',
         'Papery/Musty' : {
             'Stale' : {},
             'Cardboard' : {},
@@ -86,6 +92,7 @@ const coffeeNotes = {
         }
     },
     'Roasted' : {
+        color : 'rgb(187,81,58)',
         'Pipe Tobacco' : {},
         'Tobacco' : {},
         'Burnt' : {
@@ -100,6 +107,7 @@ const coffeeNotes = {
         }
     },
     'Spices' : {
+        color : 'rgb(159,47,64)',
         'Pungent' : {},
         'Pepper' : {},
         'Brown Spice' : {
@@ -110,15 +118,18 @@ const coffeeNotes = {
         }
     },
     'Nutty' : {
+        color : 'rgb(196,138,110)',
         'Peanut' : {},
         'Hazelnut' : {},
         'Almond' : {}
     },
     'Cocoa' : {
+        color : 'rgb(177,120,83)',
         'Chocolate' : {},
         'Dark Chocolate' : {}
     },
     'Sweet' : {
+        color : 'rgb(214,96,63)',
         'Brown Sugar' : {
             'Molasses' : {},
             'Maple Syrup' : {},
