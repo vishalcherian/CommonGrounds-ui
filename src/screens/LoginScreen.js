@@ -10,11 +10,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-
+import SentimentSatisfiedSharpIcon from '@material-ui/icons/SentimentSatisfiedSharp';
+import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
 import { makeStyles } from '@material-ui/core/styles'
 
 import Config from '../Config'
 import './styles/LoginScreenStyles.css'
+import Copyright from '../components/Copyright'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,18 +36,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing( 3, 0, 5 ),
   },
+  error : {
+    color : 'red'
+  }
 }));
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'CommonGrounds © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Enjoy ❤️ 
-      </Link>{' '}
-    </Typography>
-  );
-}
 
 const LoginScreen = ( props ) => {
   const classes = useStyles()
@@ -53,23 +47,32 @@ const LoginScreen = ( props ) => {
   const [ email, setEmail ] = useState( '' )
   const [ password, setPassword ] = useState( '' )
   const [ loading, setLoading ] = useState( false )
-  const [ errors, setErrors ] = useState( null )
+  const [ errors, setErrors ] = useState( '' )
 
   const handleSubmit = async ( event ) => {
     try {
       event.preventDefault()
+      setErrors( '' )
       setLoading( true )
       const res = await axios.post( `${Config.BASE_URL}/login`, {
         email,
         password
       } )
       console.log( 'result:', res.data )
+      localStorage.setItem( 'FBIdToken', `Bearer ${res.data.token}` )
       setLoading( false )
       props.history.push( '/' )
     } catch ( err ) {
       setLoading( false )
-      console.log( 'errors:', err )
-      setErrors( err )
+      if ( err.response ) {
+        setErrors( err.response.data.error )
+      } else if ( err.request ) {
+        setErrors( err.request.data.error )
+        console.log( 'Something went wrong, please try again later.' )
+      } else {
+        setErrors( 'Something went wrong, please try again later' )
+      }
+      console.log( 'errors:', err.error )
     }
   }
 
@@ -85,6 +88,9 @@ const LoginScreen = ( props ) => {
             <Typography component="h5" variant="h5" gutterBottom>
               Loading...
             </Typography>
+          )}
+          {errors && (
+            <p className={classes.error}>{errors}</p>
           )}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
@@ -116,7 +122,7 @@ const LoginScreen = ( props ) => {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="primary" icon={<SentimentSatisfiedSharpIcon color="primary"/>} checkedIcon={<InsertEmoticonSharpIcon color="secondary"/>}/>}
               label="Remember me"
             />
             <Button
@@ -128,8 +134,10 @@ const LoginScreen = ( props ) => {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
+            <Grid 
+              container
+              justify="space-around">
+              <Grid item>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
