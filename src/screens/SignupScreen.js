@@ -6,17 +6,17 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux'
 
 import Config from '../Config'
 import Copyright from '../components/Copyright'
+import { signupUser } from '../redux/actions/userAction'
 
 const useStyles = makeStyles( (theme) => ({
   paper: {
@@ -38,7 +38,11 @@ const useStyles = makeStyles( (theme) => ({
   },
 }));
 
-const SignupScreen = ( props ) => {
+const SignupScreen = ( {
+  signupUser,
+  history,
+  UI : { loading, errors },
+} ) => {
   const classes = useStyles();
 
   const [ firstName, setFirstName ] = useState( '' )
@@ -47,38 +51,18 @@ const SignupScreen = ( props ) => {
   const [ email, setEmail ] = useState( '' )
   const [ password, setPassword ] = useState( '' )
   const [ confirmPassword, setConfirmPassword ] = useState( '' )
-  const [ loading, setLoading ] = useState( false )
-  const [ errors, setErrors ] = useState( '' )
 
   const handleSubmit = async ( event ) => {
-    try {
-      event.preventDefault()
-      setErrors( '' )
-      setLoading( true )
-      const res = await axios.post( `${Config.BASE_URL}/signup`, {
-        firstName,
-        lastName,
-        userHandle,
-        email,
-        password,
-        confirmPassword
-      } )
-      console.log( 'res:', res )
-      localStorage.setItem( 'FBIdToken', `Bearer ${res.data.token}` )
-      setLoading( false )
-      props.history.push( '/' )
-    } catch ( err ) {
-      setLoading( false)
-      if ( err.response ) {
-        setErrors( err.response.data.error )
-      } else if ( err.request ) {
-        setErrors( err.request.data.error )
-      } else {
-        setErrors( 'Something went wrong, please try again later' )
-      }
-      console.log( 'errors:', err.error )
+    event.preventDefault()
+    const newUserData = {
+      firstName,
+      lastName,
+      userHandle,
+      email,
+      password,
+      confirmPassword
     }
-    
+    signupUser( newUserData, history )
   }
 
   return (
@@ -210,4 +194,13 @@ const SignupScreen = ( props ) => {
   )
 }
 
-export default SignupScreen
+const mapStateToProps = ( state ) => ( {
+  user : state.user,
+  UI : state.UI
+} )
+
+const mapDispatchToProps = {
+  signupUser
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( SignupScreen )

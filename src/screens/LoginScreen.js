@@ -13,10 +13,11 @@ import Box from '@material-ui/core/Box';
 import SentimentSatisfiedSharpIcon from '@material-ui/icons/SentimentSatisfiedSharp';
 import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
 import { makeStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
 
-import Config from '../Config'
 import './styles/LoginScreenStyles.css'
 import Copyright from '../components/Copyright'
+import { loginUser } from '../redux/actions/userAction'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,39 +42,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LoginScreen = ( props ) => {
+const LoginScreen = ( {
+  loginUser,
+  history,
+  UI : { loading, errors }
+} ) => {
   const classes = useStyles()
 
   const [ email, setEmail ] = useState( '' )
   const [ password, setPassword ] = useState( '' )
-  const [ loading, setLoading ] = useState( false )
-  const [ errors, setErrors ] = useState( '' )
 
   const handleSubmit = async ( event ) => {
-    try {
-      event.preventDefault()
-      setErrors( '' )
-      setLoading( true )
-      const res = await axios.post( `${Config.BASE_URL}/login`, {
-        email,
-        password
-      } )
-      console.log( 'result:', res.data )
-      localStorage.setItem( 'FBIdToken', `Bearer ${res.data.token}` )
-      setLoading( false )
-      props.history.push( '/' )
-    } catch ( err ) {
-      setLoading( false )
-      if ( err.response ) {
-        setErrors( err.response.data.error )
-      } else if ( err.request ) {
-        setErrors( err.request.data.error )
-        console.log( 'Something went wrong, please try again later.' )
-      } else {
-        setErrors( 'Something went wrong, please try again later' )
-      }
-      console.log( 'errors:', err.error )
+    event.preventDefault()
+    const userData = {
+      email,
+      password
     }
+    loginUser( userData, history )
   }
 
   return (
@@ -156,4 +141,13 @@ const LoginScreen = ( props ) => {
   )
 }
 
-export default LoginScreen
+const mapStateToProps = ( state ) => ( {
+  user : state.user,
+  UI : state.UI
+} )
+
+const mapDispatchToProps = {
+  loginUser
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( LoginScreen )

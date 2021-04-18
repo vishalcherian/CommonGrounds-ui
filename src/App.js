@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles'
 import jwtDecode from 'jwt-decode'
+import { Provider } from 'react-redux'
 
 import {
   HomeScreen,
@@ -12,6 +13,7 @@ import {
 import './App.css'
 import theme from './theme/colors'
 import AuthRoute from './util/AuthRoute'
+import store from './redux/store'
 
 let authenticated = false
 const token = localStorage.FBIdToken;
@@ -24,11 +26,10 @@ if ( token ) {
   authenticated = true
 }
 
-console.log( 'authenticated:', authenticated )
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="App">
+      <Provider store={store}>
         <Router>
           <div className="container">
             <Switch >
@@ -39,7 +40,7 @@ function App() {
             </Switch>
           </div>
         </Router>
-      </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }

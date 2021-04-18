@@ -38,14 +38,18 @@ const NewReviewScreen = ( props ) => {
         backgroundColor : CoffeeNotes[adjective].color,
         color : 'white',
       }
-      return <Chip label={adjective} onClick={handleClick} style={chipStyle} elevation/>
+      return <Chip
+        label={adjective} 
+        onClick={handleClick} 
+        style={chipStyle} 
+        clickable />
     } )
     setChips( chips ) 
   } )
 
   const handleClick = () => {}
   return (
-    <Container component="main" maxWidth="lg">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h3" gutterBottom>
@@ -56,15 +60,15 @@ const NewReviewScreen = ( props ) => {
             First, describe it's boldest flavor
           </Typography>
         </Grid>
-        <Grid container xs={12} justify="space-between">
+        <Grid className={classes.label} container xs={12} justify="flex-start">
           {chips}
         </Grid>
-        <Grid container xs={12} justify="flex-start">
+        <Grid container  xs={12} justify="flex-start">
           <Typography className={classes.label} component="body1" variant="body2" gutterBottom>
             Mmm, any additional notes?
           </Typography>
         </Grid>
-        <Grid container xs={12} justify="space-between">
+        <Grid container xs={12} justify="flex-start">
           {chips}
         </Grid>
       </div>
