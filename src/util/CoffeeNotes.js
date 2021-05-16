@@ -3,145 +3,162 @@
     Found here : https://www.scanews.coffee/wp-content/uploads/2016/01/SCAA_FlavorWheel.01.18.15.jpg
 */
 
-const coffeeNotes = {
-    'Floral' : {
-        color : 'rgb(200,48,104)',
-        'Black Tea' : {},
-        'Chamomile' : {},
-        'Rose' : {},
-        'Jasmine' : {}
-    },
-    'Fruity' : {
-        color : 'rgb(201,53,47)',
-        'Berry' : {
-            'Blackberry' : {},
-            'Raspberry' : {},
-            'Blueberry' : {},
-            'Strawberry' : {}
-        },
-        'Dried Fruit' : {
-            'Raisin' : {},
-            'Prune' : {}
-        },
-        'Other Fruit' : {
-            'Coconut' : {},
-            'Cherry' : {},
-            'Pomegranate' : {},
-            'Pineapple' : {},
-            'Grape' : {},
-            'Apple' : {},
-            'Peach' : {},
-            'Pear' : {}
-        },
-        'Citrus Fruit' : {
-            'Grapefruit' : {},
-            'Orange' : {},
-            'Lemon' : {},
-            'Lime' : {}
-        }
-    },
-    'Sour' : {
-        color : 'rgb(221, 194, 69)',
-        'Sour Aromatics' : {},
-        'Acetic Acid' : {},
-        'Butyric Acid' : {},
-        'Isovaleric Acid' : {},
-        'Citric Acid' : {},
-        'Malic Acid' : {}
-    },
-    'Fermented' : {
-        color : 'rgb(172, 151, 69)',
-        'Winey' : {},
-        'Whiskey' : {},
-        'Overripe' : {}
-    },
-    'Green/Vegetative' : {
-        color : 'rgb(58,119,56)',
-        'Olive Oil' : {},
-        'Raw' : {},
-        'Under-Ripe' : {},
-        'Peapod' : {},
-        'Fresh' : {},
-        'Dark Green' : {},
-        'Vegetative' : {},
-        'Hay-Like' : {},
-        'Herb-Like' : {},
-        'Beany' : {}
-    },
-    'Other' : {
-        color : 'rgb(72,160,178)',
-        'Papery/Musty' : {
-            'Stale' : {},
-            'Cardboard' : {},
-            'Papery' : {},
-            'Woody' : {},
-            'Moldy/Damp' : {},
-            'Musty/Dusty' : {},
-            'Musty/Earthy' : {},
-            'Animalic' : {},
-            'Meaty Brothy' : {},
-            'Phenolic' : {}
-        },
-        'Chemical' : {
-            'Bitter' : {},
-            'Salty' : {},
-            'Medicinal' : {},
-            'Petroleum' : {},
-            'Skunky' : {},
-            'Rubber' : {}
-        }
-    },
-    'Roasted' : {
-        color : 'rgb(187,81,58)',
-        'Pipe Tobacco' : {},
-        'Tobacco' : {},
-        'Burnt' : {
-            'Acrid' : {},
-            'Ashy' : {},
-            'Smoky' : {},
-            'Brown Roast' : {},
-        },
-        'Cereal' : {
-            'Grain' : {},
-            'Malt' : {}
-        }
-    },
-    'Spices' : {
-        color : 'rgb(159,47,64)',
-        'Pungent' : {},
-        'Pepper' : {},
-        'Brown Spice' : {
-            'Anise' : {},
-            'Nutmeg' : {},
-            'Cinnamon' : {},
-            'Clove' : {},
-        }
-    },
-    'Nutty' : {
-        color : 'rgb(196,138,110)',
-        'Peanut' : {},
-        'Hazelnut' : {},
-        'Almond' : {}
-    },
-    'Cocoa' : {
-        color : 'rgb(177,120,83)',
-        'Chocolate' : {},
-        'Dark Chocolate' : {}
-    },
-    'Sweet' : {
-        color : 'rgb(214,96,63)',
-        'Brown Sugar' : {
-            'Molasses' : {},
-            'Maple Syrup' : {},
-            'Caramelized' : {},
-            'Honey' : {}
-        },
-        'Vanilla' : {},
-        'Vanillin' : {},
-        'Overall Sweet' : {},
-        'Sweet Aromatics' : {},
-        'Black Tea' : {}
-    }
+// unselected example : { borderColor : 'pink', borderWidth : '2px', color : 'pink', fontWeight : 'bold' }
+// highlighted example : { borderColor : 'pink', borderWidth : '2px', color : 'pink', 'fontWeight' : 'bold', boxShadow : '0px 0px 10px 2px pink, inset 0px 0px 10px 2px pink' }
+// selected example : { borderColor : 'pink', backgroundColor : 'pink', borderWidth : '2px', color : 'black', 'fontWeight' : 'bold', boxShadow : '0px 0px 10px 2px pink' }
+const coffeeNoteValues = {
+    'Floral' : { color : 'rgb(234,0,92)', subNotes : [ 'Black Tea', 'Chamomile', 'Rose', 'Jasmine' ] },
+    'Fruity' : { color : 'rgb(233,0,24)', subNotes : [ 'Berry', 'Dried Fruit', 'Other Fruit', 'Citrus Fruit' ] },
+    'Sour' : { color : 'rgb(226,188,0)', subNotes : [ 'Sour Aromatics', 'Acetic Acid', 'Butyric Acid', 'Isovaleric Acid', 'Citric Acid', 'Malic Acid' ] },
+    'Alcohol' : { color : 'rgb(171,140,36)', subNotes : [ 'Winey', 'Whiskey', 'Fermented', 'Overripe' ] },
+    'Green/Vegetative' : { color : 'rgb(0,113,38)', subNotes : [ 'Olive Oil', 'Raw', 'Under-Ripe', 'Peapod', 'Fresh', 'Dark Green', 'Vegetative', 'Hay-Like', 'Herb-Like', 'Beany' ] },
+    'Papery/Musty' : { color : 'rgb(142,169,175)', subNotes : [ 'Stale', 'Cardboard', 'Papery', 'Woody', 'Moldy/Damp', 'Dusty', 'Earthy', 'Animalic', 'Meaty/Brothy', 'Phenolic' ] },
+    'Chemical' : { color : 'rgb(83,186,197)', subNotes : [ 'Bitter', 'Salty', 'Medicinal', 'Petroleum', 'Skunky', 'Rubber' ] },
+    'Roasted' : { color : 'rgb(211,55,37)', subNotes : [ 'Pipe Tobacco', 'Tobacco', 'Burnt', 'Cereal' ] },
+    'Spices' : { color : 'rgb(179,1,53)', subNotes : [ 'Pungent', 'Pepper', 'Brown Spice' ] },
+    'Nutty' : { color : 'rgb(202,122,92)', subNotes : [ 'Peanuts', 'Hazelnut', 'Almond' ] },
+    'Cocoa' : { color : 'rgb(190,104,63)', subNotes : [ 'Milk Chocolate', 'Dark Chocolate' ] },
+    'Sweet' : { color : 'rgb(246,68,37)', subNotes : [ 'Brown Sugar', 'Vanilla', 'Vanillin', 'Overall Sweet', 'Sweet Aromatics' ] },
+    'Sour Aromatics' : { color : 'rgb(145,159,0)', subNotes : [] },
+    'Black Tea' : { color : 'rgb(149,80,98)', subNotes : [] }, 
+    'Acetic Acid' : { color : 'rgb(132,159,97)', subNotes : [] },
+    'Butyric Acid' : { color : 'rgb(207,170,62)', subNotes : [] },
+    'Isovaleric Acid' : { color : 'rgb(119,176,54)', subNotes : [] },
+    'Citric Acid' : { color : 'rgb(250,238,0)', subNotes : [] },
+    'Chamomile' : { color : 'rgb(255,144,0)', subNotes : [] },
+    'Malic Acid' : { color : 'rgb(186,179,0)', subNotes : [] },
+    'Rose' : { color : 'rgb(255,67,107)', subNotes : [] },
+    'Jasmine' : { color : 'rgb(247,239,178)', subNotes : [] },
+    'Berry' : { color : 'rgb(235,55,68)', subNotes : [ 'Blackberry', 'Raspberry', 'Blueberry', 'Strawberry' ] },
+    'Strawberry' : { color : 'rgb(255,0,42)', subNotes : [] },
+    'Blueberry' : { color : 'rgb(90,92,169)', subNotes : [] },
+    'Raspberry' : { color : 'rgb(248,0,93)', subNotes : [] },
+    'Blackberry' : { color : 'rgb(153, 35, 173)', subNotes : [] },
+    'Dried Fruit' : { color : 'rgb(211,56,57)', subNotes : [ 'Raisin', 'Prune' ] },
+    'Citrus Fruit' : { color : 'rgb(235,164,70)', subNotes : [] },
+    'Winey' : { color : 'rgb(131,41,83)', subNotes : [] },
+    'Whiskey' : { color : 'rgb(165,72,63)', subNotes : [] },
+    'Fermented' : { color : 'rgb(179,146,68)', subNotes : [] },
+    'Overripe' : { color : 'rgb(133,102,65)', subNotes : [] },
+    'Other Fruit' : { color : 'rgb(255,84,61)', subNotes : [ 'Coconut', 'Cherry', 'Pomegranate', 'Pineapple', 'Grape', 'Apple', 'Peach', 'Pear' ] },
+    'Coconut' : { color : 'rgb(215,109,40)', subNotes : [] },
+    'Cherry' : { color : 'rgb(249,19,69)', subNotes : [] },
+    'Pomegranate' : { color : 'rgb(246,65,73)', subNotes : [] },
+    'Pineapple' : { color : 'rgb(255,140,0)', subNotes : [] },
+    'Grape' : { color : 'rgb(161,178,23)', subNotes : [] },
+    'Apple' : { color : 'rgb(0,180,56)', subNotes : [] },
+    'Peach' : { color : 'rgb(255,121,77)', subNotes : [] },
+    'Pear' : { color : 'rgb(181,156,36)', subNotes : [] },
+    'Raisin' : { color : 'rgb(166,68,85)', subNotes : [] },
+    'Prune' : { color : 'rgb(152,75,109)', subNotes : [] },
+    'Olive Oil' : { color : 'rgb(163,174,68)', subNotes : [] },
+    'Raw' : { color : 'rgb(117,135,65)', subNotes : [] },
+    'Under-Ripe' : { color : 'rgb(166,186,72)', subNotes : [] },
+    'Peapod' : { color : 'rgb(115,167,76)', subNotes : [] },
+    'Fresh' : { color : 'rgb(74,163,93)', subNotes : [] },
+    'Dark Green' : { color : 'rgb(58,130,79)', subNotes : [] },
+    'Vegetative' : { color : 'rgb(88,176,88)', subNotes : [] },
+    'Hay-Like' : { color : 'rgb(163,167,71)', subNotes : [] },
+    'Herb-Like' : { color : 'rgb(130,190,85)', subNotes : [] },
+    'Beany' : { color : 'rgb(106,152,130)', subNotes : [] },
+    'Slate' : { color : 'rgb(138,141,144)', subNotes : [] },
+    'Cardboard' : { color : 'rgb(187,178,126)', subNotes : []},
+    'Papery' : { color : 'rgb(253,255,246)', subNotes : [] },
+    'Woody' : { color : 'rgb(109,80,24)', subNotes : [] },
+    'Moldy/Damp' : { color : 'rgb(162,163,117)', subNotes : [] },
+    'Dusty' : { color : 'rgb(196,181,138)', subNotes : [] },
+    'Earthy' : { color : 'rgb(148,136,80)', subNotes : [] },
+    'Animalic' : { color : 'rgb(154,151,129)', subNotes : [] },
+    'Meaty/Brothy' : { color : 'rgb(191,126,110)', subNotes : [] },
+    'Phenolic' : { color : 'rgb(203,107,109)', subNotes : [] },
+    'Bitter' : { color : 'rgb(135,168,157)', subNotes : [] },
+    'Salty' : { color : 'rgb(224,241,252)', subNotes : [] },
+    'Medicinal' : { color : 'rgb(127,154,172)', subNotes : [] },
+    'Petroleum' : { color : 'rgb(69,157,182)', subNotes : [] },
+    'Skunky' : { color : 'rgb(97,119,122)', subNotes : [] },
+    'Rubber' : { color : 'rgb(81, 245, 193)', subNotes : [] },
+    'Pipe Tobacco' : { color : 'rgb(195,164,110)', subNotes : [] },
+    'Tobacco' : { color : 'rgb(216,189,135)', subNotes : [] },
+    'Burnt' : { color : 'rgb(181,137,105)', subNotes : [ 'Acrid', 'Ashy', 'Smoky', 'Brown Roast'] },
+    'Cereal' : { color : 'rgb(213,177,109)', subNotes : [ 'Grain', 'Malt' ] },
+    'Acrid' : { color : 'rgb(181,165,88)', subNotes : [] },
+    'Ashy' : { color : 'rgb(139,151,148)', subNotes : [] },
+    'Smoky' : { color : 'rgb(153,118,69)', subNotes : [] },
+    'Brown Roast' : { color : 'rgb(127,75,31)', subNotes : [] },
+    'Grain' : { color : 'rgb(176,146,116)', subNotes : [] },
+    'Malt' : { color : 'rgb(222,159,105)', subNotes : [] },
+    'Pungent' : { color : 'rgb(112,73,82)', subNotes : [] },
+    'Pepper' : { color : 'rgb(187,73,70)', subNotes : [] },
+    'Brown Spice' : { color : 'rgb(163,84,89)', subNotes : [ 'Anise', 'Nutmeg', 'Cinnamon', 'Clove'] },
+    'Anise' : { color : 'rgb(190,139,70)', subNotes : [] },
+    'Nutmeg' : { color : 'rgb(128,49,48)', subNotes : []},
+    'Cinnamon' : { color : 'rgb(214,124,64)', subNotes : [] },
+    'Clove' : { color : 'rgb(153,111,94)', subNotes : [] },
+    'Peanuts' : { color : 'rgb(205,174,62)', subNotes : [] },
+    'Hazelnut' : { color : 'rgb(146,88,58)', subNotes : [] },
+    'Almond' : { color : 'rgb(193,160,135)', subNotes : [] },
+    'Milk Chocolate' : { color : 'rgb(97,46,31)', subNotes : [] },
+    'Dark Chocolate' : { color : 'rgb(64,12,8)', subNotes : [] },
+    'Brown Sugar' : { color : 'rgb(196,97,93)', subNotes : [ 'Molasses', 'Maple Syrup', 'Caramelized', 'Honey' ] },
+    'Molasses' : { color : 'rgb(150,50,200)', subNotes : [] },
+    'Maple Syrup' : { color : 'rgb(160,61,42)', subNotes : [] },
+    'Caramelized' : { color : 'rgb(203,138,60)', subNotes : [] },
+    'Honey' : { color : 'rgb(203,100,50)', subNotes : [] },
+    'Vanilla' : { color : 'rgb(234,159,133)', subNotes : [] },
+    'Vanillin' : { color : 'rgb(227,125,120)', subNotes : [] },
+    'Overall Sweet' : { color : 'rgb(213,100,107)', subNotes : [] },
+    'Sweet Aromatics' : { color : 'rgb(192,92,98)', subNotes : [] },
 }
 
-export default coffeeNotes
+const coffeeNotesData = {}
+Object.entries( coffeeNoteValues ).forEach( ( [ key, value ] ) => {
+    coffeeNotesData[key] = {
+        unselectedStyle : {
+            color : '#637475',
+            borderWidth : '2px',
+            borderColor : '#637475',
+        },
+        highlightedStyle : {
+            color : value.color,
+            borderColor : value.color,
+            borderWidth : '2px',
+            fontWeight : 'bold',
+            boxShadow : `0px 0px 10px 3px ${value.color}, inset 0px 0px 5px 2px ${value.color}`
+        },
+        selectedStyle : {
+            color : 'black',
+            backgroundColor : value.color,
+            fontWeight : 'bold',
+            boxShadow : `0px 0px 9px 0px ${value.color}`
+        },
+        postCardStyle : {
+            fontSize : 10,
+            color : 'black',
+            backgroundColor : value.color,
+            fontWeight : 'bold',
+            boxShadow : `0px 3px 9px 0px ${value.color}`,
+            height : 20
+        },
+        subNotes : value.subNotes
+    }
+} )
+
+const initialHighlights = {
+    'Floral' : true, 
+    'Fruity' : true, 
+    'Sour' : true, 
+    'Alcohol' : true,
+    'Green/Vegetative' : true, 
+    'Papery/Musty' : true,
+    'Chemical' : true,
+    'Roasted' : true, 
+    'Spices' : true, 
+    'Nutty' : true, 
+    'Cocoa' : true,
+    'Sweet' : true,
+}
+
+export {
+    coffeeNotesData,
+    initialHighlights
+}

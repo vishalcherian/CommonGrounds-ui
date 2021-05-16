@@ -4,6 +4,7 @@ import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types'
 import Config from '../../Config'
 
 const setErrors = ( err ) => async ( dispatch ) => {
+  console.log( err )
   const reduceObj = {
     type : SET_ERRORS
   }
@@ -52,7 +53,8 @@ export const signupUser = ( newUserData, history ) => async ( dispatch ) => {
 
 export const getUserData = () => async ( dispatch ) => {
   try {
-    const res = await axios.get( `${Config.BASE_URL}/user` )
+    const FBIdToken = localStorage.getItem( 'FBIdToken' )
+    const res = await axios.get( `${Config.BASE_URL}/user`, { headers : { Authorization : FBIdToken } } )
     dispatch( {
       type : SET_USER,
       payload : res.data
