@@ -7,7 +7,8 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia from '@material-ui/core/CardMedia'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
@@ -26,9 +27,12 @@ import axios from 'axios'
 import Config from '../Config'
 import { coffeeNotesData } from '../util/CoffeeNotes'
 
+const ITEM_HEIGHT = 48
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 500,
+    minWidth : 500, 
+    maxWidth : 500,
   },
   media: {
     height: 0,
@@ -61,6 +65,22 @@ const PostCard = ( {
   const classes = useStyles();
 
   const [ chips, setChips ] = useState( [] )
+  const [ anchorEl, setAnchorEl ] = useState( null )
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeletePost = () => {
+    
+    handleClose()
+  }
 
   return (
     <Card className={classes.root} elevation={1}>
@@ -71,13 +91,34 @@ const PostCard = ( {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+          <MoreVertIcon />
+        </IconButton>
         }
         title={title}
         subheader={subtitle}
       />
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch',
+          },
+        }}>
+          <MenuItem key="delete-post" onClick={handleDeletePost}>
+            Delete Post
+          </MenuItem>
+      </Menu>
       <CardContent>
         <Grid container spacing={1} >
           {flavors.map( flavor => {

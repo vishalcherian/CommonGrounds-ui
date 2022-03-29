@@ -30,20 +30,15 @@ const useStyles = makeStyles( {
 const HomeScreen = ( {
   reviewScreenOpen,
   openReviewScreen,
-  closeReviewScreen
+  closeReviewScreen,
+  history
 } ) => {
 
   const [ posts, setPosts ] = useState( [] )
 
-  useEffect( () => {
-    const getPosts = async () => {
-      const FBIdToken = localStorage.getItem( 'FBIdToken' )
-      const res = await axios.get( `${Config.BASE_URL}/posts`, { headers : { Authorization : FBIdToken } } )
-      console.log( 'res.data:', res.data )
-      setPosts( res.data )
-    }
-    getPosts()
-  }, [] )
+  // useEffect( () => {
+  //   getPosts()
+  // }, [] )
   // let recentScreamsMarkup = posts ? (
   //   posts.map( post => <p>post.description</p>)
   // ) : <p>Loading...</p>
@@ -53,7 +48,19 @@ const HomeScreen = ( {
     openReviewScreen()
   }
 
-  console.log( 'posts:', posts )
+  const handleCloseReviewScreen = () => {
+    closeReviewScreen()
+    history.push( '/' )
+  }
+
+  const getPosts = async () => {
+    const FBIdToken = localStorage.getItem( 'FBIdToken' )
+    const res = await axios.get( `${Config.BASE_URL}/posts`, { headers : { Authorization : FBIdToken } } )
+    console.log( 'res.data:', res.data )
+    setPosts( res.data )
+  }
+
+  getPosts()
   return (
     <div>
       <Grid container>
@@ -87,9 +94,9 @@ const HomeScreen = ( {
       <Dialog
         fullScreen
         open={reviewScreenOpen}
-        onClose={closeReviewScreen}
+        onClose={handleCloseReviewScreen}
         PaperProps={ { style : { backgroundColor : 'black', boxShadow : 'none' } }}>
-        <NewReviewScreen onClose={closeReviewScreen}/>
+        <NewReviewScreen onClose={handleCloseReviewScreen}/>
       </Dialog>
     </div>
   )
